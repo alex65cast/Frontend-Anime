@@ -3,8 +3,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import "./Login.css"
 import { useDispatch, useSelector } from "react-redux";
-import { userData } from "../userSlice";
+import { login, userData } from "../userSlice";
 import { useNavigate } from "react-router-dom";
+import { loginMe } from "../../services/apiCalls";
+import jwtDecode from "jwt-decode";
 
 export const Login = () => {
 
@@ -36,7 +38,21 @@ export const Login = () => {
   },[])
 
   const loginFuction = ()=>{
+    loginMe(credentials)
+    .then((result) =>{
+      const decoded = jwtDecode(result.data.token)
+      const saveData = {
+        token: result.data.token,
+        user: decoded
+      }
 
+      dispatch(login({credentials: saveData}));
+      setTimeout(() => {
+        navigate("/");
+      }, 2750);
+
+    })
+    .catch((error) =>console.log(error));
   }
 
   return (
