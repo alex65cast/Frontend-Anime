@@ -1,0 +1,7 @@
+.registerDesign{
+    display: flex;
+    justify-content: center;
+    background-color: aqua;
+    height: 40vh;
+    margin-top: 3em;
+}

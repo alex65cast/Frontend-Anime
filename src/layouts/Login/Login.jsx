@@ -49,7 +49,7 @@ export const Login = () => {
       dispatch(login({credentials: saveData}));
       setTimeout(() => {
         navigate("/");
-      }, 2750);
+      }, 750);
 
     })
     .catch((error) =>console.log(error));
