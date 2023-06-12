@@ -45,31 +45,22 @@ export const Header =() => {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
+            {!datosUserRdx?.credentials?.token ? (
                 <Nav className="justify-content-center flex-grow-1 pe-3">
-                  <Nav.Link href="#action1">Home</Nav.Link>
-                  <Nav.Link href="#action2">Link</Nav.Link>
-                  <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Nav.Link onClick={()=>navigate("/")}>Home</Nav.Link>
+                  <Nav.Link onClick={()=>navigate("/login")}>Login</Nav.Link>
+                  <Nav.Link className="link" onClick={() => navigate("/register")}>Register</Nav.Link>
                 </Nav>
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                </Form>
+                ):(
+                  <Nav className="justify-content-center flex-grow-1 pe-3">
+                    {datosUserRdx.credentials.user.rol === "Admin" &&
+                    <Nav.Link className="link" onClick={() => navigate("/admin")}>Admin</Nav.Link>
+                    }
+                  <Nav.Link onClick={()=>navigate("/")}>Home</Nav.Link>
+                  <Nav.Link className="link" onClick={() => navigate("/profile")}>{datosUserRdx.credentials.user.email}</Nav.Link>
+                  <Nav.Link className="link" onClick={() => logMeOut()}>Logout</Nav.Link>
+                </Nav>
+                )}
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
