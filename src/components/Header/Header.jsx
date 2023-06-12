@@ -58,6 +58,23 @@ export const Header =() => {
                     }
                   <Nav.Link onClick={()=>navigate("/")}>Home</Nav.Link>
                   <Nav.Link className="link" onClick={() => navigate("/profile")}>{datosUserRdx.credentials.user.email}</Nav.Link>
+                  <Navbar.Collapse id="navbar-dark-example">
+                    <Nav>
+                      <NavDropdown
+                        id="nav-dropdown-dark-example"
+                        title="Browse"
+                        menuVariant="dark"
+                      >
+                        <NavDropdown.Item href="#action/3.1">Anime top</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.2">Manga top</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="#action/3.4">
+                          Separated link
+                        </NavDropdown.Item>
+                      </NavDropdown>
+                    </Nav>
+                  </Navbar.Collapse>
                   <Nav.Link className="link" onClick={() => logMeOut()}>Logout</Nav.Link>
                 </Nav>
                 )}
