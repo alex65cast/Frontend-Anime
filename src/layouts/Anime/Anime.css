@@ -1,0 +1,15 @@
+.animeDesing{
+    display: flex;
+    justify-content: center;
+    background-color: aqua;   
+}
+
+.cardGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+.card {
+    margin-bottom: 20px;
+}
