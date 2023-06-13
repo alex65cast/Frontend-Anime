@@ -6,6 +6,7 @@ import { Login } from '../Login/Login';
 import { Register } from '../Register/Register';
 import { Anime } from '../Anime/Anime';
 import { Profile } from '../Profile/Profile';
+import { Admin } from '../Admin/Admin';
 
 
 export const Body = () => {
@@ -19,6 +20,7 @@ export const Body = () => {
             <Route path='/register' element={<Register/>}/>
             <Route path='/anime' element={<Anime/>}/>
             <Route path='/profile' element={<Profile/>}/>
+            <Route path='/admin' element={<Admin/>}/>
         </Routes>
     
     </>

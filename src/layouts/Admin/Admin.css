@@ -1,0 +1,28 @@
+.adminDesing{
+    margin-top: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profilesDesing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.card-grid {
+    margin-top: 2em;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Distribuye las columnas en partes iguales */
+    grid-gap: 20px; /* Espacio entre las tarjetas */
+  }
+  .search{
+    margin-top: 2em;
+  }
+
+  .buscarIcon{
+    width: 1.5em;
+    height: 1.5em;
+  }

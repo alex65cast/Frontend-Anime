@@ -26,29 +26,32 @@ export const Anime = () => {
   useEffect(() => {
     animeTop()
       .then((result) => {
-        console.log(result,"SOY RESULT")
+        console.log(result, "SOY RESULT");
         setDataAnime(result.data.data);
       })
       .catch((error) => console.log(error));
   }, []);
 
-  return (
-   <div className="animeDesing">
-  <div className="cardGrid">
-    {dataAnime.map((anime) => (
-      <Card style={{ width: "18rem" }} key={anime.mal_id}>
-        <Card.Img variant="top" src={anime.images.jpg.image_url} />
-        <Card.Body>
-          <Card.Title>{anime.title}</Card.Title>
-          {/* <Card.Text>{anime.synopsis}</Card.Text> */}
-          <Button variant="primary" href={anime.url}>
-            Ver más
-          </Button>
-        </Card.Body>
-      </Card>
-    ))}
-  </div>
-</div>
+  const displayedAnimes = dataAnime.slice(0, 100);
 
+  return (
+    <div className="animeDesing">
+      <div className="cardGrid">
+        {displayedAnimes.map((anime) => (
+          <div className="cardColumn" key={anime.mal_id}>
+            <Card style={{ width: "18rem" }}>
+              <Card.Img variant="top" src={anime.images.jpg.image_url} />
+              <Card.Body>
+                <Card.Title>TOP: {anime.rank}</Card.Title>
+                <Card.Title>{anime.title}</Card.Title>
+                <Button variant="primary" href={anime.url}>
+                  Ver más
+                </Button>
+              </Card.Body>
+            </Card>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
