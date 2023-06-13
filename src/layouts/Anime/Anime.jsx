@@ -26,7 +26,8 @@ export const Anime = () => {
   useEffect(() => {
     animeTop()
       .then((result) => {
-        setDataAnime(result.data);
+        console.log(result,"SOY RESULT")
+        setDataAnime(result.data.data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -34,7 +35,7 @@ export const Anime = () => {
   return (
    <div className="animeDesing">
   <div className="cardGrid">
-    {dataAnime.data.map((anime) => (
+    {dataAnime.map((anime) => (
       <Card style={{ width: "18rem" }} key={anime.mal_id}>
         <Card.Img variant="top" src={anime.images.jpg.image_url} />
         <Card.Body>
