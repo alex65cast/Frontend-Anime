@@ -14,6 +14,10 @@ export const animeTop = async()=>{
     return await axios.get('https://api.jikan.moe/v4/top/anime');
 }
 
+export const mangaTop = async()=>{
+  return await axios.get('https://api.jikan.moe/v4/top/manga');
+}
+
 export const bringUserProfile = async (token) => {
 
   let config = {

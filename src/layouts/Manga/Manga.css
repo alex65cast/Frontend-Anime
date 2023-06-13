@@ -1,0 +1,24 @@
+.animeDesing {
+    display: flex;
+    justify-content: center;
+    background-color: aqua;
+    max-width: 100%;
+  }
+  
+  .cardGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100em;
+  }
+  
+  .cardColumn {
+    width: 20em;
+    padding: 0.5em;
+    box-sizing: border-box;
+  }
+  
+  .card {
+    margin-bottom: 1em;
+  }
+  

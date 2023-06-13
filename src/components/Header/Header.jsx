@@ -66,7 +66,7 @@ export const Header =() => {
                         menuVariant="dark"
                       >
                         <NavDropdown.Item onClick={()=> navigate("/anime")}>Anime top</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">Manga top</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=> navigate("/manga")}>Manga top</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">
