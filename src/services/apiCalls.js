@@ -57,3 +57,7 @@ export const bringUsersAdmin = async (token, nameUs) => {
 
   return await axios.get(`http://localhost:3000/user/`, config);
 }
+
+export const searchAnimes = async(name)=>{
+  return await axios.get(`https://api.jikan.moe/v4/anime?q=${name}&sfw`);
+}
