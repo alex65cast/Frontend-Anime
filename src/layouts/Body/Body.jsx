@@ -8,6 +8,7 @@ import { Anime } from '../Anime/Anime';
 import { Profile } from '../Profile/Profile';
 import { Admin } from '../Admin/Admin';
 import { Manga } from '../Manga/Manga';
+import { SearchAnime } from '../SearchAnime/SearchAnime';
 
 
 export const Body = () => {
@@ -23,6 +24,7 @@ export const Body = () => {
             <Route path='/manga' element={<Manga/>}/>
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/admin' element={<Admin/>}/>
+            <Route path='/search' element={<SearchAnime/>}/>
         </Routes>
     
     </>
