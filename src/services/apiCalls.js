@@ -14,6 +14,10 @@ export const animeTop = async()=>{
     return await axios.get('https://api.jikan.moe/v4/top/anime');
 }
 
+export const animeId = async(id)=>{
+  return await axios.get(`https://api.jikan.moe/v4/anime/${id}`);
+}
+
 export const mangaTop = async()=>{
   return await axios.get('https://api.jikan.moe/v4/top/manga');
 }
@@ -27,6 +31,17 @@ export const bringUserProfile = async (token) => {
   };
 
   return await axios.get(`http://localhost:3000/user/${token.user.id}`, config);
+}
+
+export const bringAnimeList = async (token) => {
+
+  let config = {
+      headers: { 
+        'Authorization': 'Bearer '+ token.token,  
+      }
+  };
+
+  return await axios.get(`http://localhost:3000/anime/`, config);
 }
 
 export const bringUsersAdmin = async (token, nameUs) => {
