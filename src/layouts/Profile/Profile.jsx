@@ -96,6 +96,7 @@ export const Profile = () => {
           // handleClose();
           setSelectedAnime(null);
           setNoteModalVisible(false);
+          window.location.reload()
           // navigate("/appointments");
         })
         .catch((error) => console.log(error));
