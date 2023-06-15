@@ -13,10 +13,10 @@
     flex-direction: column;
 }
 .card-grid {
-    margin-top: 2em;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Distribuye las columnas en partes iguales */
-    grid-gap: 20px; /* Espacio entre las tarjetas */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* width: 100em; */
   }
   .search{
     margin-top: 2em;

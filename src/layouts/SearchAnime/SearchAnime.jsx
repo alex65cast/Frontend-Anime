@@ -1,20 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./SearchAnime.css";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Card, Modal, Form, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice.js";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
 import { addAnimeList, bringStatusAnime, searchAnimes } from "../../services/apiCalls.js";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Row } from "react-bootstrap";
-import { Col } from "react-bootstrap";
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export const SearchAnime = () => {
   const [datosPerfilUser, setDatosPerfilUser] = useState([]);
@@ -22,9 +13,8 @@ export const SearchAnime = () => {
   const [selectedAnime, setSelectedAnime] = useState([]);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
   const [note, setNote] = useState("");
+  const [selectedStatusId, setSelectedStatusId] = useState("");
   const [statusAnime, setStatusAnime] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState("");
-
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
@@ -34,7 +24,11 @@ export const SearchAnime = () => {
     title: selectedAnime ? selectedAnime.title : "",
     imageUrl: "",
     season: selectedAnime ? selectedAnime.season : "",
-    statusList: ""
+    statusList: selectedStatusId ? selectedStatusId._id : ""
+  });
+
+  useEffect(() => {
+    console.log(credentials, "Datos actualizados");
   });
 
   const inputHandlerFunction = (value) => {
@@ -42,7 +36,7 @@ export const SearchAnime = () => {
     setCredentials((prevState) => ({
       ...prevState,
       ratingUser: value,
-      statusList: selectedStatus
+      statusList: selectedStatusId ? selectedStatusId._id : ""
     }));
   };
 
@@ -62,15 +56,11 @@ export const SearchAnime = () => {
     }
   }, []);
 
-  useEffect(()=>{
-    console.log(credentials,"DATOS ACTUALIZADOS")
-  },)
-
   useEffect(() => {
     bringStatusAnime(userRdxData.credentials)
       .then((result) => {
-        console.log(result.data[0], "STATUS DE ANIMES");
-        setStatusAnime(result.data[0]);
+        console.log(result.data, "STATUS DE ANIMES");
+        setStatusAnime(result.data);
       })
       .catch((error) => console.log(error));
   }, []);
@@ -95,13 +85,23 @@ export const SearchAnime = () => {
         rank: selectedAnime.rank,
         title: selectedAnime.title,
         imageUrl: selectedAnime.images?.jpg?.image_url,
-        season: selectedAnime.season
+        season: selectedAnime.season,
       }));
     }
   }, [selectedAnime]);
 
   const saveAnime = () => {
     if (selectedAnime) {
+      const selectedStatusObject = statusAnime.find(
+        (status) => status._id === selectedStatusId._id
+      );
+      const statusListId = selectedStatusObject ? selectedStatusObject._id : "";
+
+      setCredentials((prevState) => ({
+        ...prevState,
+        statusList: statusListId
+      }));
+
       addAnimeList(credentials, userRdxData.credentials)
         .then(() => {
           setSelectedAnime(null);
@@ -113,7 +113,7 @@ export const SearchAnime = () => {
 
   return (
     <div className="adminDesign">
-      <div className="search">
+      <div className="profilesDesing">
         <Container fluid="t" className="topCol justify-content-center">
           <Row>
             <Col>
@@ -175,18 +175,22 @@ export const SearchAnime = () => {
             </Form.Group>
           </Form>
           <br />
-          <DropdownButton id="dropdown-basic-button" title="Status">
-            <Dropdown.Item
-              name="statusList"
-              onClick={(e) => {
-                setSelectedStatus(e.target.innerText);
-                inputHandlerFunction(e.target.innerText);
-              }}
-            >
-              {statusAnime.completed}
-            </Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          </DropdownButton>
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic-button">
+              {selectedStatusId ? selectedStatusId.state : "Seleccionar Estado"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {statusAnime.map((status) => (
+                <Dropdown.Item
+                  key={status._id}
+                  name="statusList"
+                  onClick={() => setSelectedStatusId(status)}
+                >
+                  {status.state}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </Modal.Body>
         <Modal.Footer>
           <Button
