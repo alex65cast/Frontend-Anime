@@ -69,10 +69,10 @@ export const Profile = () => {
               {datosPerfilUser.rol}
             </Card.Footer>
           </Card>
-          <div>
+          <div className="cardGrid">
             {bringAnimes.map((anime) => (
               <div className="cardColumn" key={anime.animeID}>
-                <Card style={{ width: "18rem" }}>
+                <Card className="desingCardAnime">
                   <Card.Img variant="top" src={anime.imageUrl} />
                   <Card.Body>
                     <Card.Title>{anime.title}</Card.Title>

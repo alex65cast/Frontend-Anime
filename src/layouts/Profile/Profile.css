@@ -8,3 +8,17 @@
     align-items: center;
     flex-direction: column;
 }
+.cardGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 30em;
+    /* background-color: black; */
+  }
+.cardColumn{
+    /* background-color: aqua; */
+}
+.desingCardAnime{
+    width: 18em;
+    height: 32em;
+}
