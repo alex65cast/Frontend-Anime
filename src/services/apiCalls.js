@@ -85,3 +85,14 @@ export const editAnimeList = async(idAnime,data, token)=>{
 
   return await axios.patch(`http://localhost:3000/anime/${idAnime}`, data, config);
 }
+
+export const bringStatusAnime = async(token)=>{
+
+  let config = {
+    headers: { 
+      'Authorization': 'Bearer '+ token.token,  
+    }
+  };
+
+  return await axios.get(`http://localhost:3000/statusAnime/`, config);
+}

@@ -1,7 +1,6 @@
 import React from "react";
 import "./SearchAnime.css";
 import { Container } from "react-bootstrap";
-
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice.js";
 import Button from "react-bootstrap/Button";
@@ -9,30 +8,33 @@ import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-// import buscarIcon from "../../../public/buscar.png";
-import { addAnimeList, searchAnimes } from "../../services/apiCalls.js";
+import { addAnimeList, bringStatusAnime, searchAnimes } from "../../services/apiCalls.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export const SearchAnime = () => {
   const [datosPerfilUser, setDatosPerfilUser] = useState([]);
-  const [bringAnime, setbringAnime] = useState("");
+  const [bringAnime, setBringAnime] = useState("");
   const [selectedAnime, setSelectedAnime] = useState([]);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
   const [note, setNote] = useState("");
+  const [statusAnime, setStatusAnime] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
-    // userList: "",
     ratingUser: note,
-    animeID:selectedAnime ? selectedAnime.mal_id: "",
-    rank:selectedAnime ? selectedAnime.rank: "",
-    title:selectedAnime ? selectedAnime.title: "",
-    imageUrl:"",
-    season:selectedAnime ? selectedAnime.season:"",
+    animeID: selectedAnime ? selectedAnime.mal_id : "",
+    rank: selectedAnime ? selectedAnime.rank : "",
+    title: selectedAnime ? selectedAnime.title : "",
+    imageUrl: "",
+    season: selectedAnime ? selectedAnime.season : "",
+    statusList: ""
   });
 
   const inputHandlerFunction = (value) => {
@@ -40,11 +42,12 @@ export const SearchAnime = () => {
     setCredentials((prevState) => ({
       ...prevState,
       ratingUser: value,
+      statusList: selectedStatus
     }));
   };
 
   const inputHandler = (e) => {
-    setbringAnime(e.target.value);
+    setBringAnime(e.target.value);
   };
 
   const openNoteModal = (anime) => {
@@ -52,36 +55,25 @@ export const SearchAnime = () => {
     setNote(anime.note || "");
     setNoteModalVisible(true);
   };
-  useEffect(() => {
-    console.log(selectedAnime, "Soy anime seleccionado");
-    if (selectedAnime) {
-      setCredentials((prevState) => ({
-        ...prevState,
-        // userList: userRdxData.user?.id,
-        animeID: selectedAnime.mal_id,
-        rank: selectedAnime.rank,
-        title: selectedAnime.title,
-        imageUrl: selectedAnime.images?.jpg?.image_url,
-        season: selectedAnime.season,
-      }));
-    }
-  }, [selectedAnime]);
-  useEffect(() => {
-    console.log(datosPerfilUser, "HOALALAA");
-  }, []);
 
   useEffect(() => {
     if (!userRdxData.credentials.token) {
       navigate("/");
     }
   }, []);
-  useEffect(() => {
-    console.log(credentials, "soy credentials");
-  }, [credentials]);
+
+  useEffect(()=>{
+    console.log(credentials,"DATOS ACTUALIZADOS")
+  },)
 
   useEffect(() => {
-    console.log(selectedAnime, "Soy anime seleccionado");
-  }, [selectedAnime]);
+    bringStatusAnime(userRdxData.credentials)
+      .then((result) => {
+        console.log(result.data[0], "STATUS DE ANIMES");
+        setStatusAnime(result.data[0]);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   useEffect(() => {
     if (bringAnime !== "") {
@@ -94,22 +86,33 @@ export const SearchAnime = () => {
     }
   }, [bringAnime]);
 
+  useEffect(() => {
+    console.log(selectedAnime, "Soy anime seleccionado");
+    if (selectedAnime) {
+      setCredentials((prevState) => ({
+        ...prevState,
+        animeID: selectedAnime.mal_id,
+        rank: selectedAnime.rank,
+        title: selectedAnime.title,
+        imageUrl: selectedAnime.images?.jpg?.image_url,
+        season: selectedAnime.season
+      }));
+    }
+  }, [selectedAnime]);
+
   const saveAnime = () => {
-    // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
     if (selectedAnime) {
       addAnimeList(credentials, userRdxData.credentials)
         .then(() => {
-          // handleClose();
           setSelectedAnime(null);
           setNoteModalVisible(false);
-          // navigate("/appointments");
         })
         .catch((error) => console.log(error));
     }
   };
 
   return (
-    <div className="adminDesing">
+    <div className="adminDesign">
       <div className="search">
         <Container fluid="t" className="topCol justify-content-center">
           <Row>
@@ -120,12 +123,7 @@ export const SearchAnime = () => {
                 name="bringAnime"
                 placeholder="buscar"
                 onChange={(e) => inputHandler(e)}
-              />{" "}
-              {/* <img
-                  className="buscarIcon"
-                  src={buscarIcon}
-                  alt="buscarImagen"
-                ></img> */}
+              />
             </Col>
           </Row>
         </Container>
@@ -176,6 +174,19 @@ export const SearchAnime = () => {
               />
             </Form.Group>
           </Form>
+          <br />
+          <DropdownButton id="dropdown-basic-button" title="Status">
+            <Dropdown.Item
+              name="statusList"
+              onClick={(e) => {
+                setSelectedStatus(e.target.innerText);
+                inputHandlerFunction(e.target.innerText);
+              }}
+            >
+              {statusAnime.completed}
+            </Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+          </DropdownButton>
         </Modal.Body>
         <Modal.Footer>
           <Button
