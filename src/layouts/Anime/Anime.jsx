@@ -7,16 +7,17 @@ import "./Anime.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userData } from "../userSlice";
-import { animeTop } from "../../services/apiCalls";
+import { addAnimeList, animeTop } from "../../services/apiCalls";
 
 export const Anime = () => {
   const [dataAnime, setDataAnime] = useState([]);
   const [selectedAnime, setSelectedAnime] = useState([]);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
   const [note, setNote] = useState("");
-
+  
+  const userRdxData = useSelector(userData);
   const [credentials, setCredentials] = useState({
-    // userList: userRdxData.user.id,
+    // userList: "",
     ratingUser: note,
     animeID:selectedAnime ? selectedAnime.mal_id: "",
     rank:selectedAnime ? selectedAnime.rank: "",
@@ -35,7 +36,9 @@ export const Anime = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userRdxData = useSelector(userData);
+  useEffect(()=>{
+    console.log(userRdxData,"usuario")
+  })
 
   useEffect(() => {
     if (!userRdxData.credentials.token) {
@@ -48,6 +51,7 @@ export const Anime = () => {
     if (selectedAnime) {
       setCredentials((prevState) => ({
         ...prevState,
+        // userList: userRdxData.user?.id,
         animeID: selectedAnime.mal_id,
         rank: selectedAnime.rank,
         title: selectedAnime.title,
@@ -67,7 +71,7 @@ export const Anime = () => {
   useEffect(() => {
     animeTop()
       .then((result) => {
-        console.log(result, "SOY RESULT");
+        // console.log(result, "SOY RESULT");
         setDataAnime(result.data.data);
       })
       .catch((error) => console.log(error));
@@ -81,13 +85,12 @@ export const Anime = () => {
     setNoteModalVisible(true);
   };
 
-  const saveNote = () => {
+  const saveAnime = () => {
     // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
-    console.log("Nota guardada:", note);
     if (selectedAnime) {
-      editQuote(selectedAnime._id, credentials, quoteRdxData.credentials)
+      addAnimeList(credentials, userRdxData.credentials)
         .then(() => {
-          handleClose();
+          // handleClose();
           setSelectedAnime(null);
           setNoteModalVisible(false);
           // navigate("/appointments");
@@ -147,7 +150,7 @@ export const Anime = () => {
           >
             Cancelar
           </Button>
-          <Button variant="primary" onClick={saveNote}>
+          <Button variant="primary" onClick={()=>saveAnime()}>
             Guardar
           </Button>
         </Modal.Footer>

@@ -61,3 +61,16 @@ export const bringUsersAdmin = async (token, nameUs) => {
 export const searchAnimes = async(name)=>{
   return await axios.get(`https://api.jikan.moe/v4/anime?q=${name}&sfw`);
 }
+
+export const addAnimeList = async(data, token)=>{
+
+  let config = {
+    headers: { 
+      'Authorization': 'Bearer '+ token.token,  
+    }
+  };
+
+  // const requestData = { dat: data }; 
+  return await axios.post(`http://localhost:3000/anime/`, data, config);
+
+}
