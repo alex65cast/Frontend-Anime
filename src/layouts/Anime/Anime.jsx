@@ -14,6 +14,25 @@ export const Anime = () => {
   const [selectedAnime, setSelectedAnime] = useState([]);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
   const [note, setNote] = useState("");
+
+  const [credentials, setCredentials] = useState({
+    // userList: userRdxData.user.id,
+    ratingUser: note,
+    animeID:selectedAnime ? selectedAnime.mal_id: "",
+    rank:selectedAnime ? selectedAnime.rank: "",
+    title:selectedAnime ? selectedAnime.title: "",
+    imageUrl:"",
+    season:selectedAnime ? selectedAnime.season:"",
+  });
+
+  const inputHandlerFunction = (value) => {
+    setNote(value);
+    setCredentials((prevState) => ({
+      ...prevState,
+      ratingUser: value,
+    }));
+  };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userRdxData = useSelector(userData);
@@ -25,12 +44,25 @@ export const Anime = () => {
   }, []);
 
   useEffect(() => {
-    console.log(dataAnime, "DATA_ANIME");
-  }, [dataAnime]);
+    console.log(selectedAnime, "Soy anime seleccionado");
+    if (selectedAnime) {
+      setCredentials((prevState) => ({
+        ...prevState,
+        animeID: selectedAnime.mal_id,
+        rank: selectedAnime.rank,
+        title: selectedAnime.title,
+        imageUrl: selectedAnime.images?.jpg?.image_url,
+        season: selectedAnime.season,
+      }));
+    }
+  }, [selectedAnime]);
+  useEffect(() => {
+    console.log(credentials, "soy credentials");
+  }, [credentials]);
 
-  useEffect(()=>{
-    console.log(selectedAnime,"Soy anime seleccionado")
-  },[selectedAnime])
+  useEffect(() => {
+    console.log(selectedAnime, "Soy anime seleccionado");
+  }, [selectedAnime]);
 
   useEffect(() => {
     animeTop()
@@ -52,8 +84,16 @@ export const Anime = () => {
   const saveNote = () => {
     // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
     console.log("Nota guardada:", note);
-    setSelectedAnime(null);
-    setNoteModalVisible(false);
+    if (selectedAnime) {
+      editQuote(selectedAnime._id, credentials, quoteRdxData.credentials)
+        .then(() => {
+          handleClose();
+          setSelectedAnime(null);
+          setNoteModalVisible(false);
+          // navigate("/appointments");
+        })
+        .catch((error) => console.log(error));
+    }
   };
 
   return (
@@ -62,7 +102,7 @@ export const Anime = () => {
         {displayedAnimes.map((anime) => (
           <div className="cardColumn" key={anime.mal_id}>
             <Card style={{ width: "18rem" }}>
-              <Card.Img variant="top" src={anime.images.jpg.image_url} />
+              <Card.Img variant="top" src={anime.images.jpg?.image_url} />
               <Card.Body>
                 <Card.Title>TOP: {anime.rank}</Card.Title>
                 <Card.Title>{anime.title}</Card.Title>
@@ -93,14 +133,18 @@ export const Anime = () => {
                 type="number"
                 min={1}
                 max={10}
+                name="ratingUser"
                 value={note}
-                onChange={(e) => setNote(e.target.value)}
+                onChange={(e) => inputHandlerFunction(e.target.value)}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setNoteModalVisible(false)}>
+          <Button
+            variant="secondary"
+            onClick={() => setNoteModalVisible(false)}
+          >
             Cancelar
           </Button>
           <Button variant="primary" onClick={saveNote}>
