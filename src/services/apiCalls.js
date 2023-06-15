@@ -84,5 +84,4 @@ export const editAnimeList = async(idAnime,data, token)=>{
   };
 
   return await axios.patch(`http://localhost:3000/anime/${idAnime}`, data, config);
-
 }
