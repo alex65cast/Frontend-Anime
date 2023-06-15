@@ -104,7 +104,7 @@ export const Anime = () => {
       <div className="cardGrid">
         {displayedAnimes.map((anime) => (
           <div className="cardColumn" key={anime.mal_id}>
-            <Card style={{ width: "18rem" }}>
+            <Card className="desingCardAnim">
               <Card.Img variant="top" src={anime.images.jpg?.image_url} />
               <Card.Body>
                 <Card.Title>TOP: {anime.rank}</Card.Title>

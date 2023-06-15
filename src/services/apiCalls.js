@@ -74,3 +74,15 @@ export const addAnimeList = async(data, token)=>{
   return await axios.post(`http://localhost:3000/anime/`, data, config);
 
 }
+
+export const editAnimeList = async(idAnime,data, token)=>{
+
+  let config = {
+    headers: { 
+      'Authorization': 'Bearer '+ token.token,  
+    }
+  };
+
+  return await axios.patch(`http://localhost:3000/anime/${idAnime}`, data, config);
+
+}

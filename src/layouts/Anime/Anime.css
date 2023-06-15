@@ -11,7 +11,6 @@
     justify-content: center;
     width: 100em;
   }
-  
   .cardColumn {
     width: 20em;
     padding: 0.5em;
@@ -22,3 +21,12 @@
     margin-bottom: 1em;
   }
   
+  .desingCardAnim{
+    width: 18em;
+    height: 34em;
+    transition: transform 0.3s ease;
+}
+
+.desingCardAnim:hover {
+  transform: scale(1.05);
+}

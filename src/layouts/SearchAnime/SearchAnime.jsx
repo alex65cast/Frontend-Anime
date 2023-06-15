@@ -74,7 +74,7 @@ export const SearchAnime = () => {
             {datosPerfilUser.map((anime) => {
               return (
                 <div className="cardColumn" key={anime.mal_id}>
-                  <Card style={{ width: "18rem" }}>
+                  <Card className="desingAnimeCard">
                     <Card.Img variant="top" src={anime.images.jpg.image_url} />
                     <Card.Body>
                       <Card.Title>TOP: {anime.rank}</Card.Title>

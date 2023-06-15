@@ -1,27 +1,71 @@
 import React, { useState, useEffect } from "react";
 import "./Profile.css";
-
+import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice.js";
-
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { bringAnimeList, bringUserProfile } from "../../services/apiCalls.js";
+import { bringAnimeList, bringUserProfile, editAnimeList } from "../../services/apiCalls.js";
 import Bun from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 export const Profile = () => {
   const [datosPerfilUser, setDatosPerfilUser] = useState({});
   const [bringAnimes, setbringAnimes] = useState([]);
+  const [selectedAnime, setSelectedAnime] = useState([]);
+  const [noteModalVisible, setNoteModalVisible] = useState(false);
+  const [note, setNote] = useState("");
+
+  const [credentials, setCredentials] = useState({
+    // userList: "",
+    ratingUser: note,
+    // animeID:selectedAnime ? selectedAnime.mal_id: "",
+    // rank:selectedAnime ? selectedAnime.rank: "",
+    // title:selectedAnime ? selectedAnime.title: "",
+    // imageUrl:"",
+    // season:selectedAnime ? selectedAnime.season:"",
+  });
+
   // const [dataAnime, setDataAnime] = useState({});
 
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
+  const openNoteModal = (anime) => {
+    setSelectedAnime(anime);
+    setNote(anime.note || "");
+    setNoteModalVisible(true);
+  };
 
+  const inputHandlerFunction = (value) => {
+    setNote(value);
+    setCredentials((prevState) => ({
+      ...prevState,
+      ratingUser: value,
+    }));
+  };
+  useEffect(() => {
+    console.log(selectedAnime, "Soy anime seleccionado");
+    if (selectedAnime) {
+      setCredentials((prevState) => ({
+        ...prevState,
+        // userList: userRdxData.user?.id,
+        // animeID: selectedAnime.mal_id,
+        // rank: selectedAnime.rank,
+        // title: selectedAnime.title,
+        // imageUrl: selectedAnime.images?.jpg?.image_url,
+        // season: selectedAnime.season,
+      }));
+    }
+  }, [selectedAnime]);
   useEffect(() => {
     if (!userRdxData.credentials.token) {
       navigate("/");
     }
   }, []);
+  useEffect(() => {
+    console.log(credentials, "soy credentials");
+  }, [credentials]);
 
   useEffect(()=>{
     console.log(bringAnimes,"SOY ANIMES")
@@ -44,14 +88,19 @@ export const Profile = () => {
       .catch((error) => console.log(error));
   }, []);
 
-// useEffect(() => {
-//     animeId(bringAnimes[.animeID)
-//       .then((result) => {
-//         console.log(result, "SOY RESULT");
-//         setDataAnime(result.data.data);
-//       })
-//       .catch((error) => console.log(error));
-// }, [dataAnime]);
+  const modifyAnime = () => {
+    // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
+    if (selectedAnime) {
+      editAnimeList(selectedAnime._id,credentials, userRdxData.credentials)
+        .then(() => {
+          // handleClose();
+          setSelectedAnime(null);
+          setNoteModalVisible(false);
+          // navigate("/appointments");
+        })
+        .catch((error) => console.log(error));
+    }
+  };
     
 
   return (
@@ -80,11 +129,48 @@ export const Profile = () => {
                     {/* <Button variant="primary" href={anime.url}>
                       Ver más
                     </Button> */}
+                    <Button
+                  variant="secondary"
+                  onClick={() => openNoteModal(anime)}
+                >
+                  Editar Nota
+                </Button>
                   </Card.Body>
                 </Card>
               </div>
             ))}
           </div>
+          <Modal show={noteModalVisible} onHide={() => setNoteModalVisible(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar Nota</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formNote">
+              <Form.Label>Nota (1-10)</Form.Label>
+              <Form.Control
+                type="number"
+                min={1}
+                max={10}
+                name="ratingUser"
+                value={note}
+                onChange={(e) => inputHandlerFunction(e.target.value)}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={() => setNoteModalVisible(false)}
+          >
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={()=>modifyAnime()}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
         </>
       ) : (
         <div>NO HAY DATA</div>
