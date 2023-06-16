@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const loginMe = async(credentials) =>{
-    return await axios.post('http://localhost:3000/user/login', credentials);
+    return await axios.post('https://backend-anime-proyect.vercel.app/user/login', credentials);
 }
 
 export const register = async(data)=>{
