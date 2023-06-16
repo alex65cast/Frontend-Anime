@@ -79,14 +79,23 @@ export const Profile = () => {
       .catch((error) => console.log(error));
   }, [datosPerfilUser]);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   bringAnimeList(userRdxData.credentials)
+  //     .then((results) => {
+  //       console.log(results.data);
+  //       setbringAnimes(results.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }, []);
+
+  const allAnimes =()=>{
     bringAnimeList(userRdxData.credentials)
       .then((results) => {
         console.log(results.data);
         setbringAnimes(results.data);
       })
       .catch((error) => console.log(error));
-  }, []);
+  }
 
   const modifyAnime = () => {
     // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
@@ -119,6 +128,9 @@ export const Profile = () => {
               {datosPerfilUser.rol}
             </Card.Footer>
           </Card>
+          <Button variant="primary" onClick={()=>allAnimes()}>
+                      Ver Animes
+          </Button>
           <div className="cardGrid">
             {bringAnimes.map((anime) => (
               <div className="cardColumn" key={anime.animeID}>
