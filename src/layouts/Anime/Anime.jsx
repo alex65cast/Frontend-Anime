@@ -3,18 +3,21 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Dropdown from "react-bootstrap/Dropdown";
 import "./Anime.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userData } from "../userSlice";
-import { addAnimeList, animeTop } from "../../services/apiCalls";
+import { addAnimeList, animeTop, bringStatusAnime } from "../../services/apiCalls";
 
 export const Anime = () => {
   const [dataAnime, setDataAnime] = useState([]);
   const [selectedAnime, setSelectedAnime] = useState([]);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
   const [note, setNote] = useState("");
-  
+  const [selectedStatusId, setSelectedStatusId] = useState("");
+  const [statusAnime, setStatusAnime] = useState([]);
+
   const userRdxData = useSelector(userData);
   const [credentials, setCredentials] = useState({
     // userList: "",
@@ -24,6 +27,8 @@ export const Anime = () => {
     title:selectedAnime ? selectedAnime.title: "",
     imageUrl:"",
     season:selectedAnime ? selectedAnime.season:"",
+    statusList: selectedStatusId ? selectedStatusId._id : ""
+
   });
 
   const inputHandlerFunction = (value) => {
@@ -31,6 +36,8 @@ export const Anime = () => {
     setCredentials((prevState) => ({
       ...prevState,
       ratingUser: value,
+      statusList: selectedStatusId ? selectedStatusId._id : ""
+
     }));
   };
 
@@ -77,6 +84,15 @@ export const Anime = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  useEffect(() => {
+    bringStatusAnime(userRdxData.credentials)
+      .then((result) => {
+        console.log(result.data, "STATUS DE ANIMES");
+        setStatusAnime(result.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   const displayedAnimes = dataAnime.slice(0, 100);
 
   const openNoteModal = (anime) => {
@@ -109,14 +125,11 @@ export const Anime = () => {
               <Card.Body>
                 <Card.Title>TOP: {anime.rank}</Card.Title>
                 <Card.Title>{anime.title}</Card.Title>
-                <Button variant="primary" href={anime.url}>
-                  Ver más
-                </Button>
                 <Button
                   variant="secondary"
                   onClick={() => openNoteModal(anime)}
                 >
-                  Editar Nota
+                  Añadir
                 </Button>
               </Card.Body>
             </Card>
@@ -142,10 +155,28 @@ export const Anime = () => {
               />
             </Form.Group>
           </Form>
+          <br/>
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic-button">
+              {selectedStatusId ? selectedStatusId.state : "Seleccionar Estado"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {statusAnime.map((status) => (
+                <Dropdown.Item
+                  key={status._id}
+                  name="statusList"
+                  onClick={() => setSelectedStatusId(status)}
+                >
+                  {status.state}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
+            
             onClick={() => setNoteModalVisible(false)}
           >
             Cancelar

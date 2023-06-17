@@ -6,9 +6,11 @@ import { userData } from "../userSlice.js";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { bringAnimeList, bringUserProfile, editAnimeList } from "../../services/apiCalls.js";
+import { bringAnimeList, bringStatusAnime, bringUserProfile, editAnimeList } from "../../services/apiCalls.js";
 import Bun from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Dropdown from "react-bootstrap/Dropdown";
+
 
 export const Profile = () => {
   const [datosPerfilUser, setDatosPerfilUser] = useState({});
@@ -16,6 +18,9 @@ export const Profile = () => {
   const [selectedAnime, setSelectedAnime] = useState([]);
   const [noteModalVisible, setNoteModalVisible] = useState(false);
   const [note, setNote] = useState("");
+  const [selectedStatusId, setSelectedStatusId] = useState("");
+  const [statusAnime, setStatusAnime] = useState([]);
+
 
   const [credentials, setCredentials] = useState({
     // userList: "",
@@ -25,6 +30,7 @@ export const Profile = () => {
     // title:selectedAnime ? selectedAnime.title: "",
     // imageUrl:"",
     // season:selectedAnime ? selectedAnime.season:"",
+    statusList: selectedStatusId ? selectedStatusId._id : ""
   });
 
   // const [dataAnime, setDataAnime] = useState({});
@@ -42,6 +48,7 @@ export const Profile = () => {
     setCredentials((prevState) => ({
       ...prevState,
       ratingUser: value,
+      statusList: selectedStatusId ? selectedStatusId._id : ""
     }));
   };
   useEffect(() => {
@@ -58,6 +65,15 @@ export const Profile = () => {
       }));
     }
   }, [selectedAnime]);
+
+  useEffect(() => {
+    bringStatusAnime(userRdxData.credentials)
+      .then((result) => {
+        console.log(result.data, "STATUS DE ANIMES");
+        setStatusAnime(result.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
   useEffect(() => {
     if (!userRdxData.credentials.token) {
       navigate("/");
@@ -109,7 +125,7 @@ export const Profile = () => {
           // navigate("/appointments");
         })
         .catch((error) => console.log(error));
-    }
+    } 
   };
     
 
@@ -171,6 +187,23 @@ export const Profile = () => {
               />
             </Form.Group>
           </Form>
+          <br></br>
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic-button">
+              {selectedStatusId ? selectedStatusId.state : "Seleccionar Estado"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {statusAnime.map((status) => (
+                <Dropdown.Item
+                  key={status._id}
+                  name="statusList"
+                  onClick={() => setSelectedStatusId(status)}
+                >
+                  {status.state}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </Modal.Body>
         <Modal.Footer>
           <Button
