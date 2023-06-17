@@ -132,6 +132,16 @@ export const Profile = () => {
     })
     .catch((error) => console.log(error));
   }
+  const allAnimesPlaning =(status)=>{
+    bringAnimeList(userRdxData.credentials)
+      .then((results) => {
+        console.log(results.data);
+        // Filtrar por estado si se proporciona
+        const filteredAnimes = status ? results.data.filter(anime => anime.statusList?.state === status) : results.data;
+        setbringAnimes(filteredAnimes);
+      })
+      .catch((error) => console.log(error));
+    }
 
   // const animesCompleted =()=>{
 
@@ -180,6 +190,9 @@ export const Profile = () => {
           <Button variant="primary" onClick={() => allAnimesCompleted("Completed")}> 
                       Ver Animes completados
           </Button>
+          <Button variant="primary" onClick={() => allAnimesPlaning("Plan to watch")}> 
+                      Ver Animes planeados
+          </Button>
           <div className="cardGrid">
             {bringAnimes.map((anime) => (
               <div className="cardColumn" key={anime.animeID}>
@@ -188,7 +201,7 @@ export const Profile = () => {
                   <Card.Body>
                     <Card.Title>{anime.title}</Card.Title>
                     <Card.Title>Nota: {anime.ratingUser}</Card.Title>
-                    {/* <Card.Title>{anime.statusList.state}</Card.Title> */}
+                    <Card.Title>{anime.statusList.state}</Card.Title>
                     {/* <Button variant="primary" href={anime.url}>
                       Ver más
                     </Button> */}
