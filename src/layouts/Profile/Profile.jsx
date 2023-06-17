@@ -155,6 +155,7 @@ export const Profile = () => {
                   <Card.Body>
                     <Card.Title>{anime.title}</Card.Title>
                     <Card.Title>Nota: {anime.ratingUser}</Card.Title>
+                    <Card.Title>{anime.statusList.state}</Card.Title>
                     {/* <Button variant="primary" href={anime.url}>
                       Ver más
                     </Button> */}

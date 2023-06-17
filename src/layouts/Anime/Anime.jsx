@@ -40,6 +40,14 @@ export const Anime = () => {
 
     }));
   };
+  const inputHandlerFunctionStatus = (value) => {
+    setSelectedStatusId(value)
+    setCredentials((prevState) => ({
+      ...prevState,
+      statusList: value ? value._id : ""
+
+    }));
+  };
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,7 +77,7 @@ export const Anime = () => {
   }, [selectedAnime]);
   useEffect(() => {
     console.log(credentials, "soy credentials");
-  }, [credentials]);
+  });
 
   useEffect(() => {
     console.log(selectedAnime, "Soy anime seleccionado");
@@ -147,7 +155,7 @@ export const Anime = () => {
               <Form.Label>Nota (1-10)</Form.Label>
               <Form.Control
                 type="number"
-                min={1}
+                min={""}
                 max={10}
                 name="ratingUser"
                 value={note}
@@ -165,7 +173,7 @@ export const Anime = () => {
                 <Dropdown.Item
                   key={status._id}
                   name="statusList"
-                  onClick={() => setSelectedStatusId(status)}
+                  onClick={() => inputHandlerFunctionStatus(status)}
                 >
                   {status.state}
                 </Dropdown.Item>
