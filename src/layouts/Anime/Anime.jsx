@@ -105,7 +105,8 @@ export const Anime = () => {
 
   const openNoteModal = (anime) => {
     setSelectedAnime(anime);
-    setNote(anime.note || "");
+    setNote(anime.ratingUser || "");
+    setSelectedStatusId(anime.statusList || "")
     setNoteModalVisible(true);
   };
 
@@ -155,7 +156,7 @@ export const Anime = () => {
               <Form.Label>Nota (1-10)</Form.Label>
               <Form.Control
                 type="number"
-                min={""}
+                min={1}
                 max={10}
                 name="ratingUser"
                 value={note}

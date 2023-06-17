@@ -6,7 +6,7 @@ import { userData } from "../userSlice.js";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import { bringAnimeList, bringStatusAnime, bringUserProfile, editAnimeList } from "../../services/apiCalls.js";
+import {bringAnimeList, bringStatusAnime, bringUserProfile, editAnimeList } from "../../services/apiCalls.js";
 import Bun from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -20,6 +20,7 @@ export const Profile = () => {
   const [note, setNote] = useState("");
   const [selectedStatusId, setSelectedStatusId] = useState("");
   const [statusAnime, setStatusAnime] = useState([]);
+  const [showCompleted, setShowCompleted] = useState(false);
 
 
   const [credentials, setCredentials] = useState({
@@ -39,7 +40,8 @@ export const Profile = () => {
   const navigate = useNavigate();
   const openNoteModal = (anime) => {
     setSelectedAnime(anime);
-    setNote(anime.note || "");
+    setNote(anime.ratingUser || "");
+    setSelectedStatusId(anime.statusList || "")
     setNoteModalVisible(true);
   };
 
@@ -48,7 +50,14 @@ export const Profile = () => {
     setCredentials((prevState) => ({
       ...prevState,
       ratingUser: value,
-      statusList: selectedStatusId ? selectedStatusId._id : ""
+    }));
+  };
+    const inputHandlerFunctionStatus = (value) => {
+    setSelectedStatusId(value)
+    setCredentials((prevState) => ({
+      ...prevState,
+      statusList: value ? value._id : ""
+
     }));
   };
   useEffect(() => {
@@ -113,6 +122,27 @@ export const Profile = () => {
       .catch((error) => console.log(error));
   }
 
+  const allAnimesCompleted =(status)=>{
+  bringAnimeList(userRdxData.credentials)
+    .then((results) => {
+      console.log(results.data);
+      // Filtrar por estado si se proporciona
+      const filteredAnimes = status ? results.data.filter(anime => anime.statusList?.state === status) : results.data;
+      setbringAnimes(filteredAnimes);
+    })
+    .catch((error) => console.log(error));
+  }
+
+  // const animesCompleted =()=>{
+
+  //   bringAnimeCompleted(userRdxData.credentials)
+  //     .then((results) => {
+  //       console.log(results.data);
+  //       setbringAnimes(results.data);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
+
   const modifyAnime = () => {
     // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
     if (selectedAnime) {
@@ -147,6 +177,9 @@ export const Profile = () => {
           <Button variant="primary" onClick={()=>allAnimes()}>
                       Ver Animes
           </Button>
+          <Button variant="primary" onClick={() => allAnimesCompleted("Completed")}> 
+                      Ver Animes completados
+          </Button>
           <div className="cardGrid">
             {bringAnimes.map((anime) => (
               <div className="cardColumn" key={anime.animeID}>
@@ -155,7 +188,7 @@ export const Profile = () => {
                   <Card.Body>
                     <Card.Title>{anime.title}</Card.Title>
                     <Card.Title>Nota: {anime.ratingUser}</Card.Title>
-                    <Card.Title>{anime.statusList.state}</Card.Title>
+                    {/* <Card.Title>{anime.statusList.state}</Card.Title> */}
                     {/* <Button variant="primary" href={anime.url}>
                       Ver más
                     </Button> */}
@@ -198,7 +231,7 @@ export const Profile = () => {
                 <Dropdown.Item
                   key={status._id}
                   name="statusList"
-                  onClick={() => setSelectedStatusId(status)}
+                  onClick={() => inputHandlerFunctionStatus(status)}
                 >
                   {status.state}
                 </Dropdown.Item>

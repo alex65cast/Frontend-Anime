@@ -40,13 +40,23 @@ export const SearchAnime = () => {
     }));
   };
 
+  const inputHandlerFunctionStatus = (value) => {
+    setSelectedStatusId(value)
+    setCredentials((prevState) => ({
+      ...prevState,
+      statusList: value ? value._id : ""
+
+    }));
+  };
+
   const inputHandler = (e) => {
     setBringAnime(e.target.value);
   };
 
   const openNoteModal = (anime) => {
     setSelectedAnime(anime);
-    setNote(anime.note || "");
+    setNote(anime.ratingUser || "");
+    setSelectedStatusId(anime.statusList || "")
     setNoteModalVisible(true);
   };
 
@@ -184,7 +194,7 @@ export const SearchAnime = () => {
                 <Dropdown.Item
                   key={status._id}
                   name="statusList"
-                  onClick={() => setSelectedStatusId(status)}
+                  onClick={() => inputHandlerFunctionStatus(status)}
                 >
                   {status.state}
                 </Dropdown.Item>

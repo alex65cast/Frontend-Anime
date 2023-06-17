@@ -44,6 +44,7 @@ export const bringAnimeList = async (token) => {
   return await axios.get(`http://localhost:3000/anime/`, config);
 }
 
+
 export const bringUsersAdmin = async (token, nameUs) => {
 
   let config = {
@@ -96,3 +97,4 @@ export const bringStatusAnime = async(token)=>{
 
   return await axios.get(`http://localhost:3000/statusAnime/`, config);
 }
+
