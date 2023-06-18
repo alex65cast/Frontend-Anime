@@ -33,7 +33,7 @@ export const Header =() => {
         {['xl'].map((expand) => (
         <Navbar key={expand} expand={expand} className="mb-3 headerDesing">
           <Container fluid>
-            <Navbar.Brand href="#" className="navbar-brand"><img src={logo} alt='logo.png'></img></Navbar.Brand>
+            <Navbar.Brand className="imgLogo" onClick={()=>navigate("/")}><img src={logo} alt='logo.png'></img></Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}

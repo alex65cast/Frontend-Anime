@@ -40,8 +40,8 @@
 }
 
 .desingCardAnime {
-    width: 100%;
-    height: 28em;
+    width: 110%;
+    height: 32em;
   
     /* Apply styles for larger screens */
     @media (min-width: 576px) {
@@ -63,7 +63,13 @@
   
     /* Apply styles for mobile devices */
     @media (max-width: 575px) {
-      height: 36em;
+      height: 40em;
     }
+    transition: transform 0.3s ease;
+    
+
   }
-  
+
+  .desingCardAnime:hover {
+    transform: scale(1.05);
+  }

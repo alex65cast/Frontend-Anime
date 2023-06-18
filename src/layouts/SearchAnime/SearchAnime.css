@@ -29,4 +29,10 @@
 .desingAnimeCard{
     width: 18em;
     height: 37em;
+    transition: transform 0.3s ease;
+    background-color: rgb(238, 241, 241);
+
+}
+.desingAnimeCard:hover {
+  transform: scale(1.05);
 }
