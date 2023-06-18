@@ -6,6 +6,7 @@ import { userData } from "../userSlice.js";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { addAnimeList, bringStatusAnime, searchAnimes } from "../../services/apiCalls.js";
+import buscarIcon from "../../../public/buscar.png";
 
 export const SearchAnime = () => {
   const [datosPerfilUser, setDatosPerfilUser] = useState([]);
@@ -116,8 +117,11 @@ export const SearchAnime = () => {
         .then(() => {
           setSelectedAnime(null);
           setNoteModalVisible(false);
+          alert("Se añadío a la lista")
+
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {console.log(error)
+          alert("El anime ya está en tu lista.")});
     }
   };
 
@@ -134,6 +138,11 @@ export const SearchAnime = () => {
                 placeholder="buscar"
                 onChange={(e) => inputHandler(e)}
               />
+              <img
+                className="buscarIcon"
+                src={buscarIcon}
+                alt="buscarImagen"
+              ></img>
             </Col>
           </Row>
         </Container>

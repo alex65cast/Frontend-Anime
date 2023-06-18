@@ -58,7 +58,8 @@ export const Header =() => {
                     <Nav.Link className="whiteTitle" onClick={() => navigate("/admin")}>Admin</Nav.Link>
                     }
                   <Nav.Link onClick={()=>navigate("/")}>Home</Nav.Link>
-                  <Nav.Link className="whiteTitle" onClick={() => navigate("/profile")}>{datosUserRdx.credentials.user.email}</Nav.Link>
+                  <Nav.Link className="whiteTitle" onClick={() =>{ navigate("/profile") 
+                  window.location.reload()} }>{datosUserRdx.credentials.user.email}</Nav.Link>
                   <Navbar.Collapse id="navbar-dark-example">
                     <Nav>
                       <NavDropdown
@@ -66,9 +67,10 @@ export const Header =() => {
                         title="Browse"
                         menuVariant="dark"
                       >
-                        <NavDropdown.Item onClick={()=> navigate("/anime")}>Anime top</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=> navigate("/manga")}>Manga top</NavDropdown.Item>
-                        <NavDropdown.Item onClick={()=>navigate("/search")}>Search anime</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>{ navigate("/anime") 
+                       window.location.reload()}}>Anime top</NavDropdown.Item>
+                        <NavDropdown.Item onClick={()=>{navigate("/search") 
+                         window.location.reload()}}>Search anime</NavDropdown.Item>
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">
                           Separated link

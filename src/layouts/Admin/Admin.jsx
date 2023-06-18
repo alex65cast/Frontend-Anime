@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice.js";
+import buscarIcon from "../../../public/buscar.png";
 
 import { useNavigate } from "react-router-dom";
 // import buscarIcon from "../../../public/buscar.png";
@@ -73,11 +74,11 @@ export const Admin = () => {
                 placeholder="buscar"
                 onChange={(e) => inputHandler(e)}
               />{" "}
-              {/* <img
+              <img
                 className="buscarIcon"
                 src={buscarIcon}
                 alt="buscarImagen"
-              ></img> */}
+              ></img>
             </Col>
           </Row>
         </Container>

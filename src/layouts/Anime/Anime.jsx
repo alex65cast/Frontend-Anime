@@ -111,16 +111,16 @@ export const Anime = () => {
   };
 
   const saveAnime = () => {
-    // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
     if (selectedAnime) {
       addAnimeList(credentials, userRdxData.credentials)
         .then(() => {
-          // handleClose();
           setSelectedAnime(null);
           setNoteModalVisible(false);
-          // navigate("/appointments");
+          alert("Se añadío a la lista")
         })
-        .catch((error) => console.log(error));
+        .catch((error) =>{console.log(error)
+           alert("El anime ya está en tu lista.")});
+        
     }
   };
 
