@@ -1,7 +1,14 @@
 .registerDesign{
     display: flex;
     justify-content: center;
-    background-color: aqua;
-    height: 40vh;
+    background-color: #b2c0eb;
+
+    height: 55vh;
+    width: 35em;
+    border-radius: 2%;
     margin-top: 3em;
+}
+.registerCar{
+    display: flex;
+    justify-content: center;
 }

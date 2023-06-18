@@ -18,7 +18,7 @@ export const Register = () => {
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
-    phoneNumer:"",
+    phoneNumer: "",
     password: "",
   });
 
@@ -39,10 +39,13 @@ export const Register = () => {
 
   return (
     <Container fluid>
-      <div className="registerDesign">
-        <Form>
+      <div className="registerCar">
+        <div className="registerDesign">
+          <Form>
+           <div className="title">CREAR CUENTA</div>
+            <br></br>
+
             <Form.Group className="mb-3" controlId="formBasicName">
-              <Form.Label>Name</Form.Label>
               <Form.Control
                 type="name"
                 placeholder="Enter name"
@@ -50,8 +53,9 @@ export const Register = () => {
                 onChange={inputHandlerFunction}
               />
             </Form.Group>
+            <br></br>
+
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Enter email"
@@ -59,8 +63,8 @@ export const Register = () => {
                 onChange={inputHandlerFunction}
               />
             </Form.Group>
+            <br></br>
             <Form.Group className="mb-3" controlId="formBasicPhoneNumber">
-              <Form.Label>Phone Number</Form.Label>
               <Form.Control
                 type="tel"
                 placeholder="Phone Number"
@@ -68,8 +72,8 @@ export const Register = () => {
                 onChange={inputHandlerFunction}
               />
             </Form.Group>
+            <br></br>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Password"
@@ -77,13 +81,12 @@ export const Register = () => {
                 onChange={inputHandlerFunction}
               />
             </Form.Group>
-            <Button
-              variant="primary"
-              onClick={() => registerMe()}
-            >
-              Submit
+            <br></br>
+            <Button variant="primary" className="button" onClick={() => registerMe()}>
+              Acceder
             </Button>
-        </Form>
+          </Form>
+        </div>
       </div>
     </Container>
   );
