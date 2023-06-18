@@ -1,12 +1,14 @@
 import axios from "axios";
 
+const urlBack='http://localhost:3000';
+
 export const loginMe = async(credentials) =>{
-    return await axios.post('http://localhost:3000/user/login', credentials);
+    return await axios.post(`${urlBack}/user/login`, credentials);
 }
 
 export const register = async(data)=>{
 
-  return await axios.post(`http://localhost:3000/user/`, data);
+  return await axios.post(`${urlBack}/user/`, data);
 
 }
 
@@ -30,7 +32,7 @@ export const bringUserProfile = async (token) => {
       }
   };
 
-  return await axios.get(`http://localhost:3000/user/${token.user.id}`, config);
+  return await axios.get(`${urlBack}/user/${token.user.id}`, config);
 }
 
 export const bringAnimeList = async (token) => {
@@ -41,7 +43,7 @@ export const bringAnimeList = async (token) => {
       }
   };
 
-  return await axios.get(`http://localhost:3000/anime/`, config);
+  return await axios.get(`${urlBack}/anime/`, config);
 }
 
 
@@ -56,7 +58,7 @@ export const bringUsersAdmin = async (token, nameUs) => {
       }
   };
 
-  return await axios.get(`http://localhost:3000/user/`, config);
+  return await axios.get(`${urlBack}/user/`, config);
 }
 
 export const searchAnimes = async(name)=>{
@@ -72,7 +74,7 @@ export const addAnimeList = async(data, token)=>{
   };
 
   // const requestData = { dat: data }; 
-  return await axios.post(`http://localhost:3000/anime/`, data, config);
+  return await axios.post(`${urlBack}/anime/`, data, config);
 
 }
 
@@ -84,7 +86,7 @@ export const editAnimeList = async(idAnime,data, token)=>{
     }
   };
 
-  return await axios.patch(`http://localhost:3000/anime/${idAnime}`, data, config);
+  return await axios.patch(`${urlBack}/anime/${idAnime}`, data, config);
 }
 
 export const bringStatusAnime = async(token)=>{
@@ -95,6 +97,6 @@ export const bringStatusAnime = async(token)=>{
     }
   };
 
-  return await axios.get(`http://localhost:3000/statusAnime/`, config);
+  return await axios.get(`${urlBack}/statusAnime/`, config);
 }
 
