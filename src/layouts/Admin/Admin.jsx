@@ -1,21 +1,17 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-
 import { useSelector } from "react-redux";
 import { userData } from "../userSlice.js";
 import buscarIcon from "../../../public/buscar.png";
-
 import { useNavigate } from "react-router-dom";
-// import buscarIcon from "../../../public/buscar.png";
 import { bringUsersAdmin } from "../../services/apiCalls.js";
-import Bun from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
-
 import "./Admin.css";
+
 export const Admin = () => {
   const [datosPerfilUser, setDatosPerfilUser] = useState([]);
   const [bringUser, setbringUser] = useState("");
@@ -26,9 +22,6 @@ export const Admin = () => {
     setbringUser(e.target.value);
   };
 
-  useEffect(() => {
-    console.log(userRdxData.credentials, "HOALALAA");
-  }, []);
 
   useEffect(() => {
     if (!userRdxData.credentials.token) {
@@ -41,7 +34,6 @@ export const Admin = () => {
       const bring = setTimeout(() => {
         bringUsersAdmin(userRdxData.credentials, bringUser)
           .then((results) => {
-            console.log(results.data, "JAJAAJAJ");
             setDatosPerfilUser(results.data);
           })
           .catch((error) => console.log(error));
@@ -53,7 +45,6 @@ export const Admin = () => {
       } else {
         bringUsersAdmin(userRdxData.credentials)
           .then((results) => {
-            console.log(results);
             setDatosPerfilUser(results.data);
           })
           .catch((error) => console.log(error));

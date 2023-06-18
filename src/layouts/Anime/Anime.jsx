@@ -20,7 +20,6 @@ export const Anime = () => {
 
   const userRdxData = useSelector(userData);
   const [credentials, setCredentials] = useState({
-    // userList: "",
     ratingUser: note,
     animeID:selectedAnime ? selectedAnime.mal_id: "",
     rank:selectedAnime ? selectedAnime.rank: "",
@@ -51,9 +50,6 @@ export const Anime = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(()=>{
-    console.log(userRdxData,"usuario")
-  })
 
   useEffect(() => {
     if (!userRdxData.credentials.token) {
@@ -62,11 +58,9 @@ export const Anime = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selectedAnime, "Soy anime seleccionado");
     if (selectedAnime) {
       setCredentials((prevState) => ({
         ...prevState,
-        // userList: userRdxData.user?.id,
         animeID: selectedAnime.mal_id,
         rank: selectedAnime.rank,
         title: selectedAnime.title,
@@ -75,18 +69,11 @@ export const Anime = () => {
       }));
     }
   }, [selectedAnime]);
-  useEffect(() => {
-    console.log(credentials, "soy credentials");
-  });
 
-  useEffect(() => {
-    console.log(selectedAnime, "Soy anime seleccionado");
-  }, [selectedAnime]);
 
   useEffect(() => {
     animeTop()
       .then((result) => {
-        // console.log(result, "SOY RESULT");
         setDataAnime(result.data.data);
       })
       .catch((error) => console.log(error));
@@ -95,7 +82,6 @@ export const Anime = () => {
   useEffect(() => {
     bringStatusAnime(userRdxData.credentials)
       .then((result) => {
-        console.log(result.data, "STATUS DE ANIMES");
         setStatusAnime(result.data);
       })
       .catch((error) => console.log(error));

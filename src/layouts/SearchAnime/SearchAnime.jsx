@@ -28,9 +28,6 @@ export const SearchAnime = () => {
     statusList: selectedStatusId ? selectedStatusId._id : ""
   });
 
-  useEffect(() => {
-    console.log(credentials, "Datos actualizados");
-  });
 
   const inputHandlerFunction = (value) => {
     setNote(value);
@@ -70,7 +67,6 @@ export const SearchAnime = () => {
   useEffect(() => {
     bringStatusAnime(userRdxData.credentials)
       .then((result) => {
-        console.log(result.data, "STATUS DE ANIMES");
         setStatusAnime(result.data);
       })
       .catch((error) => console.log(error));
@@ -80,7 +76,6 @@ export const SearchAnime = () => {
     if (bringAnime !== "") {
       searchAnimes(bringAnime)
         .then((results) => {
-          console.log(results.data, "JAJAAJAJ");
           setDatosPerfilUser(results.data.data);
         })
         .catch((error) => console.log(error));
@@ -88,7 +83,6 @@ export const SearchAnime = () => {
   }, [bringAnime]);
 
   useEffect(() => {
-    console.log(selectedAnime, "Soy anime seleccionado");
     if (selectedAnime) {
       setCredentials((prevState) => ({
         ...prevState,

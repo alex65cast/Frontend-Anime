@@ -14,7 +14,6 @@ export const Login = () => {
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  // Hook credenciales usuario
   const [credentials, setCredentials] = useState({
     email: "",
     password: ""
@@ -28,32 +27,11 @@ export const Login = () => {
   };
   
   useEffect(()=>{
-    console.log(credentials,"CREDENCIALES?");
-  })
-  
-  useEffect(()=>{
     if(userRdxData.credentials.token){
       navigate("/")
     }
   },[])
 
-  // const loginFuction = ()=>{
-  //   loginMe(credentials)
-  //   .then((result) =>{
-  //     const decoded = jwtDecode(result.data.token)
-  //     const saveData = {
-  //       token: result.data.token,
-  //       user: decoded
-  //     }
-
-  //     dispatch(login({credentials: saveData}));
-  //     setTimeout(() => {
-  //       navigate("/");
-  //     }, 750);
-
-  //   })
-  //   .catch((error) =>console.log(error));
-  // }
   
   const loginFuction = () => {
     setError(""); // Resetear el error al intentar iniciar sesión nuevamente

@@ -24,20 +24,14 @@ export const Profile = () => {
 
 
   const [credentials, setCredentials] = useState({
-    // userList: "",
     ratingUser: note,
-    // animeID:selectedAnime ? selectedAnime.mal_id: "",
-    // rank:selectedAnime ? selectedAnime.rank: "",
-    // title:selectedAnime ? selectedAnime.title: "",
-    // imageUrl:"",
-    // season:selectedAnime ? selectedAnime.season:"",
-    statusList: selectedStatusId ? selectedStatusId._id : ""
+ 
   });
 
-  // const [dataAnime, setDataAnime] = useState({});
 
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
+
   const openNoteModal = (anime) => {
     setSelectedAnime(anime);
     setNote(anime.ratingUser || "");
@@ -56,12 +50,11 @@ export const Profile = () => {
     setSelectedStatusId(value)
     setCredentials((prevState) => ({
       ...prevState,
-      statusList: value ? value._id : ""
+      statusList: value
 
     }));
   };
   useEffect(() => {
-    console.log(selectedAnime, "Soy anime seleccionado");
     if (selectedAnime) {
       setCredentials((prevState) => ({
         ...prevState,
@@ -78,7 +71,6 @@ export const Profile = () => {
   useEffect(() => {
     bringStatusAnime(userRdxData.credentials)
       .then((result) => {
-        console.log(result.data, "STATUS DE ANIMES");
         setStatusAnime(result.data);
       })
       .catch((error) => console.log(error));
@@ -88,13 +80,7 @@ export const Profile = () => {
       navigate("/");
     }
   }, []);
-  useEffect(() => {
-    console.log(credentials, "soy credentials");
-  }, [credentials]);
 
-  useEffect(()=>{
-    console.log(bringAnimes,"SOY ANIMES")
-  },[])
 
   useEffect(() => {
     bringUserProfile(userRdxData.credentials)
@@ -104,19 +90,11 @@ export const Profile = () => {
       .catch((error) => console.log(error));
   }, [datosPerfilUser]);
 
-  // useEffect(() => {
-  //   bringAnimeList(userRdxData.credentials)
-  //     .then((results) => {
-  //       console.log(results.data);
-  //       setbringAnimes(results.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
+
 
   const allAnimes =()=>{
     bringAnimeList(userRdxData.credentials)
       .then((results) => {
-        console.log(results.data);
         setbringAnimes(results.data);
       })
       .catch((error) => console.log(error));
@@ -125,7 +103,6 @@ export const Profile = () => {
   const allAnimesCompleted =(status)=>{
   bringAnimeList(userRdxData.credentials)
     .then((results) => {
-      console.log(results.data);
       // Filtrar por estado si se proporciona
       const filteredAnimes = status ? results.data.filter(anime => anime.statusList?.state === status) : results.data;
       setbringAnimes(filteredAnimes);
@@ -135,34 +112,20 @@ export const Profile = () => {
   const allAnimesPlaning =(status)=>{
     bringAnimeList(userRdxData.credentials)
       .then((results) => {
-        console.log(results.data);
-        // Filtrar por estado si se proporciona
+        // Filtrar por estado
         const filteredAnimes = status ? results.data.filter(anime => anime.statusList?.state === status) : results.data;
         setbringAnimes(filteredAnimes);
       })
       .catch((error) => console.log(error));
     }
 
-  // const animesCompleted =()=>{
-
-  //   bringAnimeCompleted(userRdxData.credentials)
-  //     .then((results) => {
-  //       console.log(results.data);
-  //       setbringAnimes(results.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
-
   const modifyAnime = () => {
-    // Aquí puedes realizar la lógica para guardar la nota en tu backend o en el estado de la aplicación
     if (selectedAnime) {
       editAnimeList(selectedAnime._id,credentials, userRdxData.credentials)
         .then(() => {
-          // handleClose();
           setSelectedAnime(null);
           setNoteModalVisible(false);
           window.location.reload()
-          // navigate("/appointments");
         })
         .catch((error) => console.log(error));
     } 
@@ -205,9 +168,7 @@ export const Profile = () => {
                     <Card.Title>{anime.title}</Card.Title>
                     <Card.Title>Nota: {anime.ratingUser}</Card.Title>
                     <Card.Title>{anime.statusList.state}</Card.Title>
-                    {/* <Button variant="primary" href={anime.url}>
-                      Ver más
-                    </Button> */}
+
                     <Button
                   variant="secondary"
                   onClick={() => openNoteModal(anime)}

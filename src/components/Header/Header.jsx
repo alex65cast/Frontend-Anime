@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout, userData } from '../../layouts/userSlice'
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -16,10 +15,6 @@ export const Header =() => {
     const datosUserRdx = useSelector(userData);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(()=>{
-        console.log(datosUserRdx, "DATOS USERRR")
-    }, [])
 
     const logMeOut= ()=>{
         dispatch(logout({credentials: {}}));
@@ -72,8 +67,9 @@ export const Header =() => {
                         <NavDropdown.Item onClick={()=>{navigate("/search") 
                          window.location.reload()}}>Search anime</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                          Separated link
+                        <NavDropdown.Item onClick={() =>{ navigate("/profile") 
+                        window.location.reload()} }>
+                          Profile
                         </NavDropdown.Item>
                       </NavDropdown>
                     </Nav>
