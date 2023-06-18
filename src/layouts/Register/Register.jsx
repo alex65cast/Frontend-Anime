@@ -30,13 +30,6 @@ export const Register = () => {
     }));
   };
 
-  // const registerMe = () => {
-  //   register(credentials)
-  //     .then(() => {
-  //       navigate("/login");
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
   const registerMe = () => {
     setError(""); // Resetear el error al intentar registrarse nuevamente
 
@@ -103,12 +96,12 @@ export const Register = () => {
                 name="password"
                 onChange={inputHandlerFunction}
               />
-            </Form.Group>
             {error && <div className="error">{error}</div>}
             <br></br>
             <Button variant="primary" className="button" onClick={() => registerMe()}>
               Acceder
             </Button>
+            </Form.Group>
           </Form>
         </div>
       </div>
