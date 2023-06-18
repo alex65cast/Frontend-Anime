@@ -41,7 +41,7 @@
 
 .desingCardAnime {
     width: 110%;
-    height: 32em;
+    height: 33em;
   
     /* Apply styles for larger screens */
     @media (min-width: 576px) {

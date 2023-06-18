@@ -145,6 +145,8 @@ export const SearchAnime = () => {
               return (
                 <div className="cardColumn" key={anime.mal_id}>
                   <Card className="desingAnimeCard">
+                    <div className="circle">Rank# {anime.rank}</div>
+                    
                     <Card.Img variant="top" src={anime.images.jpg.image_url} />
                     <Card.Body>
                       <Card.Title>TOP: {anime.rank}</Card.Title>

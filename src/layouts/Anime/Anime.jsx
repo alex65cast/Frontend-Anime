@@ -130,9 +130,10 @@ export const Anime = () => {
         {displayedAnimes.map((anime) => (
           <div className="cardColumn" key={anime.mal_id}>
             <Card className="desingCardAnim">
+              <div className="circle">Rank# {anime.rank}</div>
               <Card.Img variant="top" src={anime.images.jpg?.image_url} />
               <Card.Body>
-                <Card.Title>TOP: {anime.rank}</Card.Title>
+                <Card.Title>Score: {anime.score}</Card.Title>
                 <Card.Title>{anime.title}</Card.Title>
                 <Button
                   variant="secondary"

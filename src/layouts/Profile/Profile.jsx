@@ -196,7 +196,10 @@ export const Profile = () => {
           <div className="cardGrid">
             {bringAnimes.map((anime) => (
               <div className="cardColumn" key={anime.animeID}>
+                
                 <Card className="desingCardAnime">
+                <div className="circle">Rank# {anime.rank}</div>
+
                   <Card.Img variant="top" src={anime.imageUrl} />
                   <Card.Body>
                     <Card.Title>{anime.title}</Card.Title>
