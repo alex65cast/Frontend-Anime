@@ -3,9 +3,20 @@ import "./Home.css";
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
+import { userData } from "../userSlice";
+import { useSelector } from "react-redux";
 
 export const Home = () => {
   const navigate = useNavigate();
+  const userRdxData = useSelector(userData);
+  
+  const handleStartClick = () => {
+    if (!userRdxData?.credentials?.token) {
+      navigate('/login');
+    } else {
+      navigate('/anime');
+    }
+  };
 
   return (
     <div className='desingHome'>
@@ -53,7 +64,7 @@ export const Home = () => {
     </Carousel>
 
     <br></br>
-    <Button variant="primary" size="lg" onClick={()=> navigate("/anime")}>
+    <Button variant="primary" size="lg"  onClick={handleStartClick}>
           Comienza ya!
     </Button>{' '}
     </div>
