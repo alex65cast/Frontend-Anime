@@ -1,9 +1,12 @@
 import React from 'react'
 import "./Home.css";
 import Carousel from 'react-bootstrap/Carousel';
-
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className='desingHome'>
           <Carousel>
@@ -48,6 +51,11 @@ export const Home = () => {
 
       </Carousel.Item>
     </Carousel>
+
+    <br></br>
+    <Button variant="primary" size="lg" onClick={()=> navigate("/anime")}>
+          Comienza ya!
+    </Button>{' '}
     </div>
   )
 }
