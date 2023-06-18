@@ -182,17 +182,17 @@ export const Profile = () => {
             </Card.Body>
             <Card.Footer className="text-muted">
               {datosPerfilUser.rol}
-            </Card.Footer>
-          </Card>
-          <Button variant="primary" onClick={()=>allAnimes()}>
+            </Card.Footer><br></br>
+            <Button variant="primary" onClick={()=>allAnimes()}>
                       Ver Animes
-          </Button>
-          <Button variant="primary" onClick={() => allAnimesCompleted("Completed")}> 
-                      Ver Animes completados
-          </Button>
-          <Button variant="primary" onClick={() => allAnimesPlaning("Plan to watch")}> 
-                      Ver Animes planeados
-          </Button>
+            </Button><br></br>
+            <Button variant="primary" onClick={() => allAnimesCompleted("Completed")}> 
+                        Ver Animes completados
+            </Button><br></br>
+            <Button variant="primary" onClick={() => allAnimesPlaning("Plan to watch")}> 
+                        Ver Animes planeados
+            </Button>
+          </Card>
           <div className="cardGrid">
             {bringAnimes.map((anime) => (
               <div className="cardColumn" key={anime.animeID}>

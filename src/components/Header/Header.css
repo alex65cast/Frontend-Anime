@@ -1,3 +1,13 @@
 .headerDesing{
-    height: 12vh;
+    height: 12vh;   
+    background-color: #b2c0eb;
 }
+.whiteTitle {
+    color: white;
+}
+.imgLogo{
+    width: 200px;
+    height: 10em;
+    background-color: aqua;
+}
+  
