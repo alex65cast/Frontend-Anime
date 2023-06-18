@@ -12,6 +12,7 @@ import Container from "react-bootstrap/Container";
 
 export const Register = () => {
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
 
@@ -29,12 +30,34 @@ export const Register = () => {
     }));
   };
 
+  // const registerMe = () => {
+  //   register(credentials)
+  //     .then(() => {
+  //       navigate("/login");
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
   const registerMe = () => {
+    setError(""); // Resetear el error al intentar registrarse nuevamente
+
+    if (!credentials.name || !credentials.email || !credentials.phoneNumer || !credentials.password) {
+      setError("Por favor, complete todos los campos");
+      return;
+    }
+
+    if (credentials.password.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+
     register(credentials)
       .then(() => {
         navigate("/login");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setError("El correo electrónico ya está registrado");
+        console.log(error);
+      });
   };
 
   return (
@@ -81,6 +104,7 @@ export const Register = () => {
                 onChange={inputHandlerFunction}
               />
             </Form.Group>
+            {error && <div className="error">{error}</div>}
             <br></br>
             <Button variant="primary" className="button" onClick={() => registerMe()}>
               Acceder
