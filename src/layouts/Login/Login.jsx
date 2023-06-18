@@ -13,7 +13,7 @@ export const Login = () => {
   const dispatch = useDispatch();
   const userRdxData = useSelector(userData);
   const navigate = useNavigate();
-
+  const [error, setError] = useState("");
   // Hook credenciales usuario
   const [credentials, setCredentials] = useState({
     email: "",
@@ -37,28 +37,56 @@ export const Login = () => {
     }
   },[])
 
-  const loginFuction = ()=>{
+  // const loginFuction = ()=>{
+  //   loginMe(credentials)
+  //   .then((result) =>{
+  //     const decoded = jwtDecode(result.data.token)
+  //     const saveData = {
+  //       token: result.data.token,
+  //       user: decoded
+  //     }
+
+  //     dispatch(login({credentials: saveData}));
+  //     setTimeout(() => {
+  //       navigate("/");
+  //     }, 750);
+
+  //   })
+  //   .catch((error) =>console.log(error));
+  // }
+  
+  const loginFuction = () => {
+    setError(""); // Resetear el error al intentar iniciar sesión nuevamente
+    if (!credentials.email || !credentials.password) {
+      setError("Por favor, complete todos los campos");
+      return;
+    }
+
     loginMe(credentials)
-    .then((result) =>{
-      const decoded = jwtDecode(result.data.token)
-      const saveData = {
-        token: result.data.token,
-        user: decoded
-      }
+      .then((result) => {
+        const decoded = jwtDecode(result.data.token);
+        const saveData = {
+          token: result.data.token,
+          user: decoded
+        };
 
-      dispatch(login({credentials: saveData}));
-      setTimeout(() => {
-        navigate("/");
-      }, 750);
+        dispatch(login({ credentials: saveData }));
+        setTimeout(() => {
+          navigate("/");
+        }, 750);
+      })
+      .catch((error) => {
+        setError("Email o contraseña incorrectos");
+        console.log(error);
+      });
+  };
 
-    })
-    .catch((error) =>console.log(error));
-  }
 
   return (
+  <div className="loginCard">
     <div className="formDesing">
       <Form>
-        <div className="title">LOGIN</div>
+        <div className="title">ACCEDER</div>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label></Form.Label>
           <Form.Control type="email" placeholder="Enter email" name="email" onChange={inputHandlerFunction}/>
@@ -70,10 +98,13 @@ export const Login = () => {
           <Form.Label></Form.Label>
           <Form.Control type="password" placeholder="Password" name="password" onChange={inputHandlerFunction}/>
         </Form.Group>
+        {error && <div className="error">{error}</div>}
+        <br></br>
         <Button variant="primary" className="button" onClick={()=>loginFuction()}>
           Login
         </Button>
       </Form>
+      </div>
     </div>
   );
 };

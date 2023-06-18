@@ -1,16 +1,32 @@
-.formDesing{
-display: flex;
-justify-content: center;
-background-color: aqua;
-height: 40vh;
-margin-top: 3em;
+.loginCard{
+    display: flex;
+    justify-content: center;
+    
+    /* align-items: center; */
+    /* flex-direction: column; */
 }
-.title{
+.formDesing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6%;
+    height: 50vh;
+    width: 35em;
+    margin-top: 3em;
+    background-color: #b2c0eb;
+
+}
+
+.title {
     display: flex;
     justify-content: center;
 }
-.button{
+
+.button {
     display: flex;
     justify-content: center;
-    margin-left: 3.5em;
+    margin-left: 3em;
+    width: 7em;
+    background-color: rgb(68, 67, 67);
 }
