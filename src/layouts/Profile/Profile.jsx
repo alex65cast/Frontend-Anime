@@ -58,12 +58,6 @@ export const Profile = () => {
     if (selectedAnime) {
       setCredentials((prevState) => ({
         ...prevState,
-        // userList: userRdxData.user?.id,
-        // animeID: selectedAnime.mal_id,
-        // rank: selectedAnime.rank,
-        // title: selectedAnime.title,
-        // imageUrl: selectedAnime.images?.jpg?.image_url,
-        // season: selectedAnime.season,
       }));
     }
   }, [selectedAnime]);
