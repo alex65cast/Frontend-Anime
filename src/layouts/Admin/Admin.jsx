@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 import { userData } from "../userSlice.js";
 import buscarIcon from "../../../public/buscar.png";
 import { useNavigate } from "react-router-dom";
-import { bringUsersAdmin } from "../../services/apiCalls.js";
+import { bringUsersAdmin, deleUser } from "../../services/apiCalls.js";
 import Card from "react-bootstrap/Card";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+
 import "./Admin.css";
 
 export const Admin = () => {
@@ -22,7 +24,20 @@ export const Admin = () => {
     setbringUser(e.target.value);
   };
 
-
+  const deleteUser = (person) => {
+    console.log(person);
+    person.activeUser = false;
+    deleUser(person._id, person, userRdxData.credentials)
+      .then(() => {
+        alert("Se eliminó");
+        bringUsersAdmin(userRdxData.credentials)
+          .then((results) => {
+            setDatosPerfilUser(results.data);
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  };
   useEffect(() => {
     if (!userRdxData.credentials.token) {
       navigate("/");
@@ -50,7 +65,7 @@ export const Admin = () => {
           .catch((error) => console.log(error));
       }
     }
-  }, [bringUser]);
+  }, []);
 
   return (
     <div className="adminDesing">
@@ -79,22 +94,28 @@ export const Admin = () => {
           <>
             {datosPerfilUser.map((person) => {
               return (
-                <Card className="text-center" key={person.id}>
+                <Card className="text-center" key={person._id}>
                   <Card.Header>Perfil de Usuario</Card.Header>
                   <Card.Body>
                     <Card.Text>Nombre: {person.name}</Card.Text>
                     <Card.Text>Correo: {person.email}</Card.Text>
                     <Card.Text>Fecha de creación: {person.date}</Card.Text>
                   </Card.Body>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      deleteUser(person);
+                    }}
+                  >
+                    Delete
+                  </Button>{" "}
                   <Card.Footer className="text-muted">{person.rol}</Card.Footer>
                 </Card>
               );
             })}
           </>
         ) : (
-          <div>
-            Cargando...
-          </div>
+          <div>Cargando...</div>
         )}
       </div>
     </div>

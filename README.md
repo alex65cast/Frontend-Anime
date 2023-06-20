@@ -4,6 +4,10 @@ Se ha realizado un proyecto de una página web para guardar tus animes favoritos
 
 Se necesitará el Backend para levantarla aquí dejo el repo: https://github.com/alex65cast/Backend-Anime-Proyect
 
+* _Usuario Admin_:
+
+email : admin@gmail.com
+contraseña: admin
 
 ## Herramientas 🚀
 

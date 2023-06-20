@@ -12,6 +12,16 @@ export const register = async(data)=>{
 
 }
 
+export const deleUser = async(id, data, token)=>{
+  
+  let config = {
+    headers: { 
+      'Authorization': 'Bearer '+ token.token,  
+    }
+  }
+  return await axios.put(`${urlBack}/user/${id}/`,data,config)
+}
+
 export const animeTop = async()=>{
     return await axios.get('https://api.jikan.moe/v4/top/anime');
 }

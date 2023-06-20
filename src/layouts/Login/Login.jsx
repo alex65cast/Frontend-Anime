@@ -47,7 +47,11 @@ export const Login = () => {
           token: result.data.token,
           user: decoded
         };
-
+        console.log(saveData.user)
+        if (saveData.user.activeUser== false) {
+          setError("El usuario no está activo");
+          return;
+        }
         dispatch(login({ credentials: saveData }));
         setTimeout(() => {
           navigate("/");
